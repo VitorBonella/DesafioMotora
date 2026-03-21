@@ -34,7 +34,17 @@ clean:
 	rm -rf $(BUILD_DIR) $(TARGET)
 
 run: all
-	./$(TARGET)
+	@if [ -z "$(FILE)" ]; then \
+		echo "Use: make run FILE=<arquivo>"; \
+		exit 1; \
+	fi
+
+	@if [ ! -f "$(FILE)" ]; then \
+		echo "Error: file '$(FILE)' not found."; \
+		exit 1; \
+	fi
+
+	./$(TARGET) $(FILE)
 
 test: all
 	@echo "==============================="
