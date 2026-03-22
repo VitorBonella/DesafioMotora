@@ -118,6 +118,14 @@ Solution* findPath(Solver* s) {
     int start_x = getX(s->origin), start_y = getY(s->origin);
     int target_x = getX(s->target), target_y = getY(s->target);
 
+    Solution* sol = (Solution*)malloc(sizeof(Solution));
+
+    if(hasObstacle(s->grid, target_x, target_y)){
+        sol->total_moves = -1;
+        sol->path = NULL;
+        return sol;
+    }
+
     AuxInfo** info = createAuxGrid(rows, cols);
     Queue* q = initQueue();
 
@@ -158,8 +166,6 @@ Solution* findPath(Solver* s) {
         }
     }
 
-
-    Solution* sol = (Solution*)malloc(sizeof(Solution));
     if (reached_target) {
         reconstructPath(sol, info, target_x, target_y);
     } else {
