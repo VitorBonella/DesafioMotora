@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
 
     Strategy* selectedStrategy = NULL;
 
-    if (strcmp(argv[2], "bfs") == 0) {
+    if (strcmp(argv[2], "bfs") == 0 || strcmp(argv[2], "BFS") == 0) {
         selectedStrategy = createStrategyBFS();
     } else {
         selectedStrategy = createStrategyAstar();
