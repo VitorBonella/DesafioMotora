@@ -107,12 +107,12 @@ PQNode* dequeuePQ(PriorityQueue* pq) {
     return root;
 }
 
-int getNodeX(PQNode* q) {
+int getNodeXPQ(PQNode* q) {
     if (q == NULL) return -1;
     return q->x;
 }
 
-int getNodeY(PQNode* q) {
+int getNodeYPQ(PQNode* q) {
     if (q == NULL) return -1;
     return q->y;
 }

@@ -34,8 +34,8 @@ clean:
 	rm -rf $(BUILD_DIR) $(TARGET)
 
 run: all
-	@if [ -z "$(FILE)" ]; then \
-		echo "Use: make run FILE=<arquivo>"; \
+	@if [ -z "$(FILE)" ] || [ -z "$(ALGO)" ]; then \
+		echo "Use: make run FILE=<arquivo> ALGO=<bfs|astar>"; \
 		exit 1; \
 	fi
 
@@ -44,33 +44,27 @@ run: all
 		exit 1; \
 	fi
 
-	./$(TARGET) $(FILE)
+	./$(TARGET) $(FILE) $(ALGO)
 
 test: all
-	@echo "==============================="
-	@echo "Tests Execution"
-	@echo "==============================="
-
-	@if [ ! -d "$(TEST_DIR)" ]; then \
-		echo "Error: folder '$(TEST_DIR)' not found."; \
+	@if [ -z "$(ALGO)" ]; then \
+		echo "Use: make test ALGO=<bfs|astar>"; \
 		exit 1; \
 	fi
-
-	@if ! ls $(TEST_DIR)/*.txt >/dev/null 2>&1; then \
-		echo "Error: no .txt files found on $(TEST_DIR)."; \
-		exit 1; \
-	fi
+	@echo "==============================="
+	@echo "Tests Execution using $(ALGO)"
+	@echo "==============================="
 
 	@mkdir -p $(TEST_OUTPUT_DIR)
 
 	@TOTAL_START=$$(date +%s%N); \
 	for file in $(TEST_DIR)/*.txt; do \
 		filename=$$(basename $$file .txt); \
-		output="$(TEST_OUTPUT_DIR)/$${filename}_out.txt"; \
+		output="$(TEST_OUTPUT_DIR)/$${filename}_$(ALGO)_out.txt"; \
 		echo "--------------------------------"; \
 		echo "Test: $$file"; \
 		START=$$(date +%s%N); \
-		./$(TARGET) $$file > $$output; \
+		./$(TARGET) $$file $(ALGO) > $$output; \
 		END=$$(date +%s%N); \
 		ELAPSED=$$((($$END-$$START)/1000000)); \
 		echo "Output saved on: $$output"; \
@@ -79,6 +73,6 @@ test: all
 	TOTAL_END=$$(date +%s%N); \
 	TOTAL=$$((($$TOTAL_END-$$TOTAL_START)/1000000)); \
 	echo "================================"; \
-	echo "Test Time: $$TOTAL ms"
+	echo "Total Test Time: $$TOTAL ms"
 
 .PHONY: all dir clean run

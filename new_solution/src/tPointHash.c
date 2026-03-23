@@ -9,9 +9,9 @@ typedef struct hashNode {
 
 
 struct pointHash {
-    unsigned int rows;
-    unsigned int cols;
-    unsigned int capacity;
+    int rows;
+    int cols;
+    int capacity;
     HashNode** table; 
 };
 
@@ -22,7 +22,7 @@ static int hashFunction(int x, int y, int capacity) {
 }
 
 
-PointHash* initMatrix(int rows, int cols) {
+PointHash* initHashTable(int rows, int cols) {
 
     PointHash* m = (PointHash*) malloc(sizeof(PointHash));
     if (m == NULL) return NULL;
@@ -40,6 +40,12 @@ PointHash* initMatrix(int rows, int cols) {
     return m;
 }
 
+int getRows(PointHash* m){
+    return m? m->rows : -1;
+}
+int getCols(PointHash* m){
+    return m? m->cols : -1;
+}
 
 void setObstacle(PointHash* m, int x, int y) {
     if (m == NULL || x < 0 || x >= m->rows || y < 0 || y >= m->cols) {
@@ -92,15 +98,13 @@ int hasObstacle(PointHash* m, int x, int y) {
 void freePointMatrix(PointHash* m) {
     if (m == NULL) return;
 
-    // Itera por todos os "baldes" da tabela hash
     for (int i = 0; i < m->capacity; i++) {
         HashNode* current = m->table[i];
         
-        // Libera a lista encadeada interna de cada "balde"
         while (current != NULL) {
             HashNode* temp = current;
             current = current->next;
-            freePoint(temp->point); // Usa a função da sua tPoint.h
+            freePoint(temp->point);
             free(temp);
         }
     }

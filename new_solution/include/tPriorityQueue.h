@@ -13,8 +13,8 @@ PQNode* dequeuePQ(PriorityQueue* pq);
 int isPQEmpty(PriorityQueue* pq);
 void freePQ(PriorityQueue* pq);
 
-int getNodeX(PQNode* q);
-int getNodeY(PQNode* q);
+int getNodeXPQ(PQNode* q);
+int getNodeYPQ(PQNode* q);
 int getNodeFCost(PQNode* q);
 
 #endif
