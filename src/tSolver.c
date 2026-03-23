@@ -58,6 +58,6 @@ void freeSolver(Solver* s) {
     freePointMatrix(s->grid);
     freePoint(s->origin);
     freePoint(s->target);
-    if (s->strategy->destroy) s->strategy->destroy(s->strategy);
+    if (s->strategy->freeStrategy) s->strategy->freeStrategy(s->strategy);
     free(s);
 }
