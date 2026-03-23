@@ -7,7 +7,7 @@
 //iface
 typedef struct strategy {
     Solution* (*findPath)(PointHash* grid, Point* origin, Point* target);
-    void (*destroy)(struct strategy* s);
+    void (*freeStrategy)(struct strategy* s);
 } Strategy;
 
 #endif

@@ -138,10 +138,13 @@ Solution* findPathAstar(PointHash* grid, Point* origin, Point* target) {
     return sol;
 }
 
+void freeAstarStrategy(Strategy* s){
+    free(s);
+}
 
 Strategy* createStrategyAstar() {
     Strategy* s = malloc(sizeof(Strategy));
     s->findPath = findPathAstar;
-    s->destroy = NULL;
+    s->freeStrategy = freeAstarStrategy;
     return s;
 }

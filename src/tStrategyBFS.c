@@ -104,9 +104,13 @@ Solution* findPathBFS(PointHash* grid, Point* origin, Point* target) {
     return sol;
 }
 
+void freeBFSStrategy(Strategy* s){
+    free(s);
+}
+
 Strategy* createStrategyBFS() {
     Strategy* s = malloc(sizeof(Strategy));
     s->findPath = findPathBFS;
-    s->destroy = NULL;
+    s->freeStrategy = freeBFSStrategy;
     return s;
 }
